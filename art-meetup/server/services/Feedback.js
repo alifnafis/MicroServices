@@ -9,18 +9,18 @@ const CircuitBreaker = require('../lib/CircuitBreaker');
 const circuitBreaker = new CircuitBreaker();
 
 class FeedbackService {
-  constructor({serviceRegistryUrl, serviceVersion}) {
+  constructor({ serviceRegistryUrl, serviceVersion }) {
     this.serviceRegistryUrl = serviceRegistryUrl;
     this.serviceVersion = serviceVersion;
     this.cache = {};
   }
 
-  async addEntry(name, title, message){
+  async addEntry(name, title, message) {
     const q = 'feedback';
     const conn = await amqplib.connect('amqp://localhost');
     const ch = await conn.createChannel();
     await ch.assertQueue(q);
-    const qm = JSON.stringify({name, title, message});
+    const qm = JSON.stringify({ name, title, message });
     return ch.sendToQueue(q, Buffer.from(qm, 'utf8'));
   }
 
