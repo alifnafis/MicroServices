@@ -17,9 +17,10 @@ module.exports = (config) => {
 
   service.use('/images', express.static(config.data.images));
 
+  // eslint-disable-next-line consistent-return
   service.get('/list', async (req, res, next) => {
     try {
-      return res.json(await speakers.getList());
+      // return res.json(await speakers.getList());
     } catch (err) {
       return next(err);
     }
